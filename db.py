@@ -57,7 +57,6 @@ def init(subreddit):
     cursor.execute('SET NAMES utf8mb4;')
 
 def insert_comment(data_form):
-    # cursor.execute(DB_ENTRY_C, data_form)
     cursor.execute(DB_ENTRY_C_1 % data_form['subreddit'] + DB_ENTRY_C_2, data_form)
     commit()
 
