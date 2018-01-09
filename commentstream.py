@@ -2,6 +2,9 @@ import db
 import time
 
 def stream_comments(subreddit, reddit):
+    commentdb = db.RDB()
+    commentdb.start('comments', subreddit)
+
     for comment in reddit.subreddit(subreddit).stream.comments():
         if comment.author is None:
             author = '[DELETED]'
@@ -22,5 +25,5 @@ def stream_comments(subreddit, reddit):
         'textlen': len(comment.body)
         }
 
-        db.insert_comment(data_form)
+        commentdb.comment(data_form)
         print(time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime()) + ": Comment by " + author)

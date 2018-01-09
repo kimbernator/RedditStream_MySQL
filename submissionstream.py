@@ -2,6 +2,8 @@ import db
 import time
 
 def stream_submissions(subreddit, reddit):
+    subdb = db.RDB()
+    subdb.start('submissions', subreddit)
     for submission in reddit.subreddit(subreddit).stream.submissions():
         if submission.author is None:
             author = '[DELETED]'
@@ -36,5 +38,5 @@ def stream_submissions(subreddit, reddit):
             'augmented_count': None,
         }
 
-        db.insert_submission(data_form)
+        subdb.submission(data_form)
         print(time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime()) + ": Submission by " + author)
